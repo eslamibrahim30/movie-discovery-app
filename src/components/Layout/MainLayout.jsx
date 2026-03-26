@@ -2,10 +2,13 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useThemeStore } from "@/store/useThemeStore";
 
 const MainLayout = () => {
+    const { theme } = useThemeStore();
+
     return (
-        <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
+        <div className={`min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300 ${theme === "dark" ? "dark" : ""}`}>
             <Navbar />
 
             <main className="grow container mx-auto px-4 py-8 md:px-8 lg:px-12">

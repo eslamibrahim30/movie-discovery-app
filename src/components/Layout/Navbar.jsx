@@ -3,16 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import { Home, Clapperboard, Heart, User, Menu, X, ChevronRight, Moon, Sun, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import logo from "@/assets/logo/logoNav.png";
+import { useThemeStore } from "@/store/useThemeStore";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDark, setIsDark] = useState(true);
     const [lang, setLang] = useState("EN");
-
-    const toggleTheme = () => {
-        setIsDark(!isDark);
-        document.documentElement.classList.toggle("dark");
-    };
+    const { theme, toggleTheme } = useThemeStore();
 
     const toggleLang = () => {
         const newLang = lang === "EN" ? "AR" : "EN";
@@ -43,7 +39,7 @@ const Navbar = () => {
                 {/* Actions */}
                 <div className="flex items-center gap-2">
                     <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full">
-                        {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
                     </Button>
 
                     <Button variant="ghost" size="sm" onClick={toggleLang} className="gap-1 font-bold">

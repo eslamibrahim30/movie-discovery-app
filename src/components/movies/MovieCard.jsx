@@ -1,10 +1,14 @@
 import React from "react";
 import { Heart, Star, Play } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useWishlistStore } from "@/store/useWishlistStore";
 
 const MovieCard = ({ movie }) => {
+  const { toggleWishlist, isInWishlist } = useWishlistStore();
+  const inWishlist = isInWishlist(movie.id);
+
   return (
     <Card className="group relative overflow-hidden border-none bg-transparent transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20">
       
@@ -21,8 +25,15 @@ const MovieCard = ({ movie }) => {
           </Button>
         </div>
 
-        <button className="absolute top-3 right-3 p-2 rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-primary hover:text-white transition-all">
-          <Heart size={18} />
+        <button
+          onClick={() => toggleWishlist(movie)}
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all ${
+            inWishlist
+              ? "bg-red-500 text-white"
+              : "bg-black/20 text-white hover:bg-primary hover:text-white"
+          }`}
+        >
+          <Heart size={18} fill={inWishlist ? "currentColor" : "none"} />
         </button>
 
         <div className="absolute top-3 left-3">
