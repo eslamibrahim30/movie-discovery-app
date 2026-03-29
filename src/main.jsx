@@ -33,13 +33,13 @@ const router = createBrowserRouter([
         element: <AccountPage />, 
       },
 			{
-				path: "movies",
+				path: "/movies",
 				element: <MoviesListPage />
 			}
     ],
   },
   {
-    path: "*",
+    path: "/*",
     element: <NotFound />, 
   },
 ]);
