@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/movie/:id", // ✅ مهم جدًا
+        path: "/movie/:id", 
         element: <MovieDetailsPage />,
       },
     ],
