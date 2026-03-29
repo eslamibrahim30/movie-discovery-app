@@ -47,7 +47,7 @@ export default function MoviesListPage() {
         {isLoading
           ? Array.from({ length: 8 }).map((_, index) => (
               <div key={index} className="flex flex-col space-y-3">
-                <div className="h-[250px] w-full bg-gray-300 rounded-lg animate-pulse"></div>
+                <div className="h-62.5 w-full bg-gray-300 rounded-lg animate-pulse"></div>
                 <div className="h-4 w-3/4 bg-gray-300 rounded animate-pulse"></div>
                 <div className="h-4 w-1/2 bg-gray-300 rounded animate-pulse"></div>
               </div>
