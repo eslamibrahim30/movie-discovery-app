@@ -14,7 +14,7 @@ const MovieCard = ({ movie }) => {
       
       <div className="relative aspect-2/3 overflow-hidden rounded-2xl bg-muted shadow-md">
         <img
-          src={movie.poster}
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
@@ -49,7 +49,7 @@ const MovieCard = ({ movie }) => {
 
         <div className="absolute top-3 left-3 pointer-events-none">
           <Badge variant="secondary" className="bg-secondary/90 text-black font-black flex items-center gap-1 shadow-sm border-none">
-            <Star size={12} className="fill-current" /> {movie.rating}
+            <Star size={12} className="fill-current" /> {movie.vote_average?.toFixed(1)}
           </Badge>
         </div>
       </div>
@@ -60,11 +60,11 @@ const MovieCard = ({ movie }) => {
         </h3>
         <div className="flex items-center gap-2">
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-              {movie.year}
+              {movie.release_date?.split("-")[0] || "N/A"}
             </span>
             <span className="w-1 h-1 rounded-full bg-border" />
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider truncate">
-              {movie.genre}
+              {movie.original_language || "EN"}
             </span>
         </div>
       </CardContent>
