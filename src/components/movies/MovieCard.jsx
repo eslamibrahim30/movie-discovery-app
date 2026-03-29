@@ -1,71 +1,87 @@
-import React from "react";
 import { Heart, Star, Play } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useWishlistStore } from "@/store/useWishlistStore";
+import { useNavigate } from "react-router-dom";
+
 
 const MovieCard = ({ movie }) => {
+  const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useWishlistStore();
+
+   console.log(movie.id);
+
+  if (!movie || !movie.id) return null;
+
   const inWishlist = isInWishlist(movie.id);
+ 
 
   return (
-    <Card className="group relative overflow-hidden border-none bg-transparent transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
-      
-      <div className="relative aspect-2/3 overflow-hidden rounded-2xl bg-muted shadow-md">
+    
+    <Card
+      onClick={() => navigate(`/movie/${movie.id}`)} // 👈 ضغط على الكارد كله
+      className="group relative overflow-hidden border-none bg-transparent transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer"
+    >
+      <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-muted shadow-md">
+        
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 transition-all duration-300 group-hover:opacity-100 flex flex-col justify-end p-4">
-          <Button 
-            size="sm" 
-            className="w-full gap-2 font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer active:scale-95"
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 transition-all duration-300">
+          <Button
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/movie/${movie.id}`);
+              
+            }}
+            className="w-full gap-2 font-bold shadow-lg"
           >
-            <Play size={16} fill="currentColor" /> Watch Now
+            <Play size={16} />
+            Watch Now
           </Button>
         </div>
 
+        {/* Wishlist */}
         <button
           onClick={(e) => {
-            e.preventDefault();
+            e.stopPropagation();
             toggleWishlist(movie);
           }}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 z-10 cursor-pointer active:scale-90 ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 z-10 ${
             inWishlist
-              ? "bg-red-500 text-white shadow-lg shadow-red-500/40"
-              : "bg-black/20 text-white hover:bg-white hover:text-red-500"
+              ? "bg-red-500 text-white"
+              : "bg-black/30 text-white hover:bg-white hover:text-red-500"
           }`}
         >
-          <Heart 
-            size={18} 
-            className={`${inWishlist ? "animate-in zoom-in duration-300" : ""}`}
-            fill={inWishlist ? "currentColor" : "none"} 
-          />
+          <Heart size={18} fill={inWishlist ? "currentColor" : "none"} />
         </button>
 
-        <div className="absolute top-3 left-3 pointer-events-none">
-          <Badge variant="secondary" className="bg-secondary/90 text-black font-black flex items-center gap-1 shadow-sm border-none">
-            <Star size={12} className="fill-current" /> {movie.vote_average?.toFixed(1)}
+        {/* Rating */}
+        <div className="absolute top-3 left-3">
+          <Badge className="bg-secondary/90 text-black font-bold flex items-center gap-1">
+            <Star size={12} className="fill-current" />
+            {movie.vote_average?.toFixed(1) || "0.0"}
           </Badge>
         </div>
       </div>
 
-      <CardContent className="pt-4 px-1 space-y-1">
-        <h3 className="font-bold text-base md:text-lg leading-tight truncate group-hover:text-primary transition-colors duration-300">
+      {/* 🟢 تحسين الاسم */}
+      <CardContent className="pt-4 px-2 space-y-1">
+        <h3 className="font-bold text-base md:text-lg leading-snug line-clamp-2 group-hover:text-primary transition-colors">
           {movie.title}
         </h3>
-        <div className="flex items-center gap-2">
-            <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-              {movie.release_date?.split("-")[0] || "N/A"}
-            </span>
-            <span className="w-1 h-1 rounded-full bg-border" />
-            <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider truncate">
-              {movie.original_language || "EN"}
-            </span>
+
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span>{movie.release_date?.split("-")[0] || "N/A"}</span>
+          <span>•</span>
+          <span>{movie.original_language?.toUpperCase() || "EN"}</span>
         </div>
       </CardContent>
     </Card>

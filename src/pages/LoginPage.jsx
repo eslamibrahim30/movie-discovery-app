@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, Link } from "react-router";
 import { loginSchema } from "@/lib/schemas";
 import { useAuthStore } from "@/store/useAuthStore";
-
-// shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,16 +18,16 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data) => {
-    // 1. Get users from LocalStorage
+    
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     
-    // 2. Check if user exists
+    
     const user = users.find(u => u.email === data.email && u.password === data.password);
 
     if (user) {
-      // 3. Update Zustand Store
+    
       login(user); 
-      navigate("/account"); // Redirect after success
+      navigate("/account"); 
     } else {
       form.setError("root", { message: "Invalid email or password" });
     }
