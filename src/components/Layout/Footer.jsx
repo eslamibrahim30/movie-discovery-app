@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo/logoNav.png";
+import { useLangStore } from "@/store/useLangStore";
 
 const TwitterIcon = ({ size = 18 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -23,6 +24,59 @@ const GithubIcon = ({ size = 18 }) => (
 );
 
 const Footer = () => {
+    const { lang } = useLangStore();
+
+    const t = {
+        en: {
+            desc: "The best place to discover and track your cinematic journey.",
+            movies: "Movies",
+            trending: "Trending",
+            topRated: "Top Rated",
+            upcoming: "Upcoming",
+            support: "Support",
+            help: "Help Center",
+            privacy: "Privacy Policy",
+            connect: "Connect",
+            rights: "© 2026 CineVibe. Designed with ❤️ for Movie Lovers."
+        },
+        ar: {
+            desc: "أفضل مكان لاكتشاف وتتبع رحلتك السينمائية.",
+            movies: "الأفلام",
+            trending: "الأكثر تداولاً",
+            topRated: "الأعلى تقييماً",
+            upcoming: "قادم قريباً",
+            support: "الدعم",
+            help: "مركز المساعدة",
+            privacy: "سياسة الخصوصية",
+            connect: "تواصل معنا",
+            rights: "© 2026 CineVibe. صُمم بـ ❤️ لعشاق السينما."
+        },
+        fr: {
+            desc: "Le meilleur endroit pour découvrir et suivre votre parcours cinématographique.",
+            movies: "Films",
+            trending: "Tendances",
+            topRated: "Mieux notés",
+            upcoming: "À venir",
+            support: "Support",
+            help: "Centre d'aide",
+            privacy: "Confidentialité",
+            connect: "Connecter",
+            rights: "© 2026 CineVibe. Conçu avec ❤️ pour les cinéphiles."
+        },
+        zh: {
+            desc: "探索和追踪您电影之旅的最佳场所。",
+            movies: "电影",
+            trending: "趋势",
+            topRated: "最高评分",
+            upcoming: "即将上映",
+            support: "支持",
+            help: "帮助中心",
+            privacy: "隐私政策",
+            connect: "联系我们",
+            rights: "© 2026 CineVibe. 为影迷精心打造 ❤️"
+        }
+    }[lang];
+
     return (
         <footer className="border-t border-border bg-muted/5 pt-12 pb-6 mt-auto">
             <div className="container mx-auto px-4 md:px-12">
@@ -30,34 +84,33 @@ const Footer = () => {
 
                     <div className="space-y-4 text-center md:text-start">
                         <Link to="/" className="flex items-center justify-center md:justify-start gap-2">
-                            <img src={logo} alt="CineVibe" className="h-18 w-auto" />
-
+                            <img src={logo} alt="CineVibe" className="h-14 w-auto object-contain" />
                         </Link>
-                        <p className="text-sm text-muted-foreground">
-                            The best place to discover and track your cinematic journey.
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                            {t.desc}
                         </p>
                     </div>
 
                     <div className="text-center md:text-start">
-                        <h4 className="font-bold text-sm mb-4 uppercase tracking-tighter">Movies</h4>
+                        <h4 className="font-bold text-sm mb-4 uppercase tracking-wider text-foreground">{t.movies}</h4>
                         <ul className="text-sm text-muted-foreground space-y-2">
-                            <li><Link title="Trending" to="/trending" className="hover:text-primary transition-colors">Trending</Link></li>
-                            <li><Link title="Top Rated" to="/top-rated" className="hover:text-primary transition-colors">Top Rated</Link></li>
-                            <li><Link title="Upcoming" to="/upcoming" className="hover:text-primary transition-colors">Upcoming</Link></li>
+                            <li><Link to="/trending" className="hover:text-primary transition-colors">{t.trending}</Link></li>
+                            <li><Link to="/top-rated" className="hover:text-primary transition-colors">{t.topRated}</Link></li>
+                            <li><Link to="/upcoming" className="hover:text-primary transition-colors">{t.upcoming}</Link></li>
                         </ul>
                     </div>
 
                     <div className="text-center md:text-start">
-                        <h4 className="font-bold text-sm mb-4 uppercase tracking-tighter">Support</h4>
+                        <h4 className="font-bold text-sm mb-4 uppercase tracking-wider text-foreground">{t.support}</h4>
                         <ul className="text-sm text-muted-foreground space-y-2">
-                            <li><Link to="/help" className="hover:text-primary transition-colors">Help Center</Link></li>
-                            <li><Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                            <li><Link to="/help" className="hover:text-primary transition-colors">{t.help}</Link></li>
+                            <li><Link to="/privacy" className="hover:text-primary transition-colors">{t.privacy}</Link></li>
                         </ul>
                     </div>
 
                     <div className="text-center md:text-start">
-                        <h4 className="font-bold text-sm mb-4 uppercase tracking-tighter">Connect</h4>
-                        <div className="flex justify-center md:justify-start gap-2">
+                        <h4 className="font-bold text-sm mb-4 uppercase tracking-wider text-foreground">{t.connect}</h4>
+                        <div className="flex justify-center md:justify-start gap-3">
                             <SocialBtn icon={<TwitterIcon size={18} />} href="https://twitter.com" />
                             <SocialBtn icon={<InstagramIcon size={18} />} href="https://instagram.com" />
                             <SocialBtn icon={<GithubIcon size={18} />} href="https://github.com" />
@@ -67,7 +120,9 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-border/50 pt-6 text-center">
-                    <p className="text-xs text-muted-foreground">© 2026 CineVibe. Designed with ❤️ for Movie Lovers.</p>
+                    <p className="text-xs text-muted-foreground tracking-wide">
+                        {t.rights}
+                    </p>
                 </div>
             </div>
         </footer>
@@ -75,7 +130,7 @@ const Footer = () => {
 };
 
 const SocialBtn = ({ icon, href }) => (
-    <Button variant="outline" size="icon" className="rounded-full hover:text-primary hover:border-primary transition-all" asChild>
+    <Button variant="outline" size="icon" className="rounded-full hover:text-primary hover:border-primary transition-all active:scale-90" asChild>
         <a href={href} target="_blank" rel="noreferrer">
             {icon}
         </a>

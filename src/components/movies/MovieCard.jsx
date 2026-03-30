@@ -31,7 +31,7 @@ const MovieCard = ({ movie }) => {
       className="group relative overflow-hidden border-none bg-transparent transition-all duration-500 hover:-translate-y-2.5 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer"
     >
       {/* Poster */}
-      <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-muted shadow-lg ring-1 ring-white/10 transition-all duration-500 group-hover:ring-primary/40">
+      <div className="relative aspect-2/3 overflow-hidden rounded-2xl bg-muted shadow-lg ring-1 ring-white/10 transition-all duration-500 group-hover:ring-primary/40">
         
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -41,7 +41,7 @@ const MovieCard = ({ movie }) => {
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 transition-all duration-300">
+        <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/30 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 transition-all duration-300">
           <Button
             size="sm"
             onClick={(e) => {
