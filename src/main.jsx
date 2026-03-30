@@ -2,18 +2,23 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
-import "./app.css";
-import MainLayout from "./components/layout/MainLayout";
+import "./App.css";
+import MainLayout from "./components/Layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
+import MoviesListPage from "./pages/MoviesListPage";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import MovieDetailsPage from "./pages/MovieDetailsPage";
+import WishlistPage from "./pages/WishlistPage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />, 
+    element: <MainLayout />,
     children: [
       // {
       //   index: true,
@@ -25,17 +30,30 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <RegisterPage />, 
+        element: <RegisterPage />,
       },
       {
         path: "/account",
-        element: <AccountPage />, 
+        element: <AccountPage />,
+      },
+      {
+        path: "movies",
+        element: <MoviesListPage />,
+      },
+
+      {
+        path: "/movie/:id",
+        element: <MovieDetailsPage />,
+      },
+      {
+        path: "/wishlist",
+        element: <WishlistPage />,
       },
     ],
   },
   {
     path: "*",
-    element: <NotFound />, 
+    element: <NotFound />,
   },
 ]);
 

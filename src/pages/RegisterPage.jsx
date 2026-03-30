@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast"; 
-import { AUTH_DB_KEY } from "@/lib/constants";
 
 export default function RegisterPage() {
   const navigate = useNavigate();

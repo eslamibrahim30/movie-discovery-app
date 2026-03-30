@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useThemeStore } from "@/store/useThemeStore";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Toaster } from "react-hot-toast";
 
 const MainLayout = () => {
   const { theme } = useThemeStore();
@@ -18,6 +19,7 @@ const MainLayout = () => {
     <div
       className={`min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300 ${theme === "dark" ? "dark" : ""}`}
     >
+      <Toaster position="top-right" />
       <Navbar />
 
       <main className="grow container mx-auto px-4 py-8 md:px-8 lg:px-12">
