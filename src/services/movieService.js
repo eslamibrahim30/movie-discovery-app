@@ -8,7 +8,7 @@ export async function fetchNowPlaying(page = 1, language = "en") {
     });
     return response.data;
   } catch (error) {
-    throw handleApiError(error); 
+    throw handleApiError(error);
   }
 }
 
@@ -38,6 +38,28 @@ export async function fetchMovieVideos(movieId) {
   try {
     const response = await tmdbApi.get(`/movie/${movieId}/videos`);
     return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+}
+
+export async function searchMovies(query, page = 1, language = "en") {
+  try {
+    const response = await tmdbApi.get("/search/movie", {
+      params: { query, page, language },
+    });
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+}
+
+export async function fetchGenres(language = "en") {
+  try {
+    const response = await tmdbApi.get("/genre/movie/list", {
+      params: { language },
+    });
+    return response.data.genres;
   } catch (error) {
     throw handleApiError(error);
   }
