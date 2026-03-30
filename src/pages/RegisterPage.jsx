@@ -14,23 +14,22 @@ export default function RegisterPage() {
     defaultValues: { username: "", email: "", password: "" },
   });
 
-  const onSubmit = (values) => {
-   
-    const existingUsers = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
 
-    
-    if (existingUsers.find(u => u.email === values.email)) {
-      form.setError("email", { message: "Email already registered" });
-      return;
-    }
+const onSubmit = (values) => {
+  // Use "movie_app_db" to match the Login page
+  const existingUsers = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
 
+  if (existingUsers.find(u => u.email === values.email)) {
+    form.setError("email", { message: "Email already registered" });
+    return;
+  }
+
+  const updatedUsers = [...existingUsers, values];
+  localStorage.setItem("movie_app_db", JSON.stringify(updatedUsers));
   
-    const updatedUsers = [...existingUsers, values];
-    localStorage.setItem("movie_app_db", JSON.stringify(updatedUsers));
-    
-    toast.success("Account created! Please login.");
-    navigate("/login");
-  };
+  toast.success("Account created! Please login.");
+  navigate("/login");
+};
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-sm bg-card">
@@ -65,7 +64,7 @@ export default function RegisterPage() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
-                <FormControl><Input type="password" placeholder="••••••" {...field} /></FormControl>
+                <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )}

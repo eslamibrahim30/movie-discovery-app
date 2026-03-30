@@ -73,6 +73,7 @@ const Navbar = () => {
 						<X size={20} />
 					</Button>
 				</div>
+
 				<div className="p-4 flex flex-col gap-2">
 					<MobileNavItem to="/" icon={<Home size={20} />} label={t.home} lang={lang} closeMenu={() => setIsOpen(false)} />
 					<MobileNavItem to="/movies" icon={<Clapperboard size={20} />} label={t.movies} lang={lang} closeMenu={() => setIsOpen(false)} />
