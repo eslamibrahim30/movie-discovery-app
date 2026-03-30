@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import { Home, Clapperboard, Heart, User, Menu, X, ChevronRight, Moon, Sun, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo/logoNav.png";
@@ -73,6 +73,7 @@ const Navbar = () => {
 						<X size={20} />
 					</Button>
 				</div>
+
 				<div className="p-4 flex flex-col gap-2">
 					<MobileNavItem to="/" icon={<Home size={20} />} label={t.home} lang={lang} closeMenu={() => setIsOpen(false)} />
 					<MobileNavItem to="/movies" icon={<Clapperboard size={20} />} label={t.movies} lang={lang} closeMenu={() => setIsOpen(false)} />
@@ -146,3 +147,90 @@ const MobileNavItem = ({ to, icon, label, lang, badgeCount, closeMenu }) => (
 );
 
 export default Navbar;
+// import React, { useState } from "react";
+// import { Link, NavLink } from "react-router";
+// import { Home, Clapperboard, Heart, User, Menu, X, Moon, Sun, Languages, LogIn } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import logo from "@/assets/logo/logoNav.png";
+// import { useThemeStore } from "@/store/useThemeStore";
+// import { useWishlistStore } from "@/store/useWishlistStore";
+// import { useAuthStore } from "@/store/useAuthStore"; // Import Auth Store
+
+// const Navbar = () => {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [lang, setLang] = useState("EN");
+//   const { theme, toggleTheme } = useThemeStore();
+//   const { isAuthenticated } = useAuthStore(); // Get Auth State
+//   const wishlist = useWishlistStore((state) => state.wishlist);
+//   const wishlistCount = wishlist.length;
+
+//   const toggleLang = () => {
+//     const newLang = lang === "EN" ? "AR" : "EN";
+//     setLang(newLang);
+//     document.documentElement.dir = newLang === "AR" ? "rtl" : "ltr";
+//   };
+
+//   const t = {
+//     EN: { home: "Home", movies: "Movies", wishlist: "Wishlist", account: "Account", login: "Login" },
+//     AR: { home: "الرئيسية", movies: "الأفلام", wishlist: "المفضلة", account: "الحساب", login: "دخول" }
+//   }[lang];
+
+//   return (
+//     <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b">
+//       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+//         <Link to="/" className="flex items-center gap-2">
+//           <img src={logo} alt="CineVibe" className="h-8 w-auto" />
+//         </Link>
+
+//         {/* Desktop Navigation */}
+//         <ul className="hidden md:flex items-center gap-6">
+//           <NavItem to="/" icon={<Home size={18} />} label={t.home} />
+//           <NavItem to="/movies" icon={<Clapperboard size={18} />} label={t.movies} />
+          
+//           {isAuthenticated ? (
+//             <>
+//               <NavItem to="/wishlist" icon={<Heart size={18} />} label={t.wishlist} badgeCount={wishlistCount} />
+//               <NavItem to="/account" icon={<User size={18} />} label={t.account} />
+//             </>
+//           ) : (
+//             <NavItem to="/login" icon={<LogIn size={18} />} label={t.login} />
+//           )}
+//         </ul>
+
+//         {/* Controls */}
+//         <div className="flex items-center gap-2">
+//           <Button variant="ghost" size="icon" onClick={toggleTheme}>
+//             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+//           </Button>
+//           <Button variant="ghost" size="sm" onClick={toggleLang} className="gap-2 font-bold">
+//             <Languages size={18} /> {lang}
+//           </Button>
+//           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+//             {isOpen ? <X size={24} /> : <Menu size={24} />}
+//           </Button>
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// };
+
+// const NavItem = ({ to, icon, label, badgeCount }) => (
+//   <li>
+//     <NavLink 
+//       to={to} 
+//       className={({ isActive }) => `flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${isActive ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"}`}
+//     >
+//       <div className="relative">
+//         {icon}
+//         {badgeCount > 0 && (
+//           <span className="absolute -top-2 -right-2 bg-primary text-[10px] text-white rounded-full h-4 w-4 flex items-center justify-center font-bold">
+//             {badgeCount}
+//           </span>
+//         )}
+//       </div>
+//       <span className="text-sm font-medium">{label}</span>
+//     </NavLink>
+//   </li>
+// );
+
+// export default Navbar;

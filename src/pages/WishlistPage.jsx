@@ -1,6 +1,6 @@
 import { Heart, Trash2, Star, CalendarDays, Globe, Clapperboard } from "lucide-react";
 import { useWishlistStore } from "@/store/useWishlistStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { notify } from "@/services/notification";
