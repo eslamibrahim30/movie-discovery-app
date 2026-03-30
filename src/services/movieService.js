@@ -42,3 +42,34 @@ export async function fetchMovieVideos(movieId) {
     throw handleApiError(error);
   }
 }
+
+
+export async function fetchMoviesWithFilters({
+  page = 1,
+  genreId,
+  sortBy = "popularity.desc",
+}) {
+  try {
+    const params = {
+      page,
+      sort_by: sortBy,
+    };
+
+    if (genreId) {
+      params.with_genres = genreId;
+    }
+
+    const response = await tmdbApi.get("/discover/movie", { params });
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+}
+export async function fetchGenres() {
+  try {
+    const response = await tmdbApi.get("/genre/movie/list");
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+}
