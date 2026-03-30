@@ -1,0 +1,1 @@
+export const AUTH_DB_KEY = "movie_app_db";

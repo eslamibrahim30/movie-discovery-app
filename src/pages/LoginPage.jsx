@@ -5,8 +5,22 @@ import { loginSchema } from "@/lib/schemas";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,16 +32,18 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data) => {
-    
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    
-    
-    const user = users.find(u => u.email === data.email && u.password === data.password);
+    // 1. Fetch from the unified key
+    const users = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
 
-    if (user) {
-    
-      login(user); 
-      navigate("/account"); 
+    // 2. Find the specific user object
+    const foundUser = users.find(
+      (u) => u.email === data.email && u.password === data.password,
+    );
+
+    if (foundUser) {
+      // 3. Pass the object (foundUser) to the store
+      login(foundUser);
+      navigate("/account");
     } else {
       form.setError("root", { message: "Invalid email or password" });
     }
@@ -38,7 +54,9 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardDescription>
+            Enter your credentials to access your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -74,7 +92,9 @@ export default function LoginPage() {
                   {form.formState.errors.root.message}
                 </p>
               )}
-              <Button type="submit" className="w-full">Sign In</Button>
+              <Button type="submit" className="w-full">
+                Sign In
+              </Button>
             </form>
           </Form>
         </CardContent>
