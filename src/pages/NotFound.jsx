@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
-
+import { useTitle } from "@/hooks/use-title";
 export default function NotFound() {
+  useTitle("Page Not Found");
   const navigate = useNavigate();
 
   return (
@@ -11,7 +12,7 @@ export default function NotFound() {
         <h2 className="text-2xl font-semibold">Lost in the store?</h2>
         <p className="text-slate-500">The page you're looking for doesn't exist.</p>
       </div>
-      <Button onClick={() => navigate("/")} size="lg">
+      <Button aria-label="Return to Home" title="Return to Home" onClick={() => navigate("/")} size="lg">
         Return to Home
       </Button>
     </div>

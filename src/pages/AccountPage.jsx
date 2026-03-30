@@ -1,7 +1,8 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router";
-
+import { useTitle } from "@/hooks/use-title";
 export default function AccountPage() {
+      useTitle("My Account");
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
 

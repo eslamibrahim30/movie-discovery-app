@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast"; 
+import { useTitle } from "@/hooks/use-title";
 
 export default function RegisterPage() {
+  useTitle("Register");
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -15,7 +17,6 @@ export default function RegisterPage() {
   });
 
   const onSubmit = (values) => {
-   
     const existingUsers = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
 
     
@@ -36,7 +37,7 @@ export default function RegisterPage() {
     <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-sm bg-card">
       <h1 className="text-2xl font-bold mb-6">Create Account</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form aria-label="Register form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="username"
@@ -70,7 +71,7 @@ export default function RegisterPage() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">Register</Button>
+          <Button aria-label="Register a new account" title="Register" type="submit" className="w-full">Register</Button>
         </form>
       </Form>
     </div>

@@ -6,14 +6,14 @@ import {
   fetchMovieVideos,
 } from "../services/movieService";
 import MovieCard from "../components/movies/MovieCard";
-
+import { useTitle } from "@/hooks/use-title";
 export default function MovieDetailsPage() {
   const { id } = useParams();
-
   const [movie, setMovie] = useState(null);
+  useTitle(movie?.title || "Movie Details");
   const [recommendations, setRecommendations] = useState([]);
   const [trailer, setTrailer] = useState(null);
-
+  
   useEffect(() => {
     async function loadData() {
       try {
@@ -38,9 +38,9 @@ export default function MovieDetailsPage() {
     loadData();
     window.scrollTo(0, 0);
   }, [id]);
-
+  
   if (!movie) return <p className="p-6 text-center">Loading...</p>;
-
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       
@@ -50,7 +50,7 @@ export default function MovieDetailsPage() {
 
         <img
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          className="w-full h-[400px] object-cover"
+          className="w-full h-100 object-cover"
         />
 
         <div className="absolute z-20 bottom-6 left-6 right-6 flex flex-col md:flex-row gap-6 items-end">
@@ -87,7 +87,7 @@ export default function MovieDetailsPage() {
 
           <div className="w-full max-w-4xl mx-auto">
             <iframe
-              className="w-full h-[250px] md:h-[400px] rounded-xl shadow-lg"
+              className="w-full h-62.5 md:h-100 rounded-xl shadow-lg"
               src={`https://www.youtube.com/embed/${trailer.key}`}
               title="Trailer"
               allowFullScreen
@@ -112,4 +112,6 @@ export default function MovieDetailsPage() {
       </div>
     </div>
   );
+
 }
+

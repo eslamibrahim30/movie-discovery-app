@@ -3,8 +3,10 @@ import { fetchNowPlaying } from "../services/movieService";
 import MovieCard from "../components/movies/MovieCard";
 import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTitle } from "@/hooks/use-title";
 
 export default function MoviesListPage() {
+    useTitle("Movies");
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
@@ -38,6 +40,7 @@ export default function MoviesListPage() {
     start = Math.max(1, end - maxVisible + 1);
   } else if (error) {
     return (
+      
       <div className="flex flex-col justify-center items-center h-[60vh] text-center px-4">
         <div className="text-6-xl mb-4">⚠️</div>
         <h2 className="text-2xl font-bold text-foreground mb-2">
