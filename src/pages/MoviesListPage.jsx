@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  fetchNowPlaying,
   fetchMoviesWithFilters,
   fetchGenres,
 } from "../services/movieService";
 import MovieCard from "../components/movies/MovieCard";
+import { useSearchParams } from "react-router";
 import SearchBar from "../components/movies/SearchBar";
 import GenreFilter from "../components/movies/GenreFilter";
-import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 
 export default function MoviesListPage() {
