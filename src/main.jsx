@@ -9,21 +9,21 @@ import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
 import MoviesListPage from "./pages/MoviesListPage";
+import HomePage from "./pages/HomePage";
+import SearchResultsPage from "./pages/SearchResultsPage";
 import React from "react";
-import ReactDOM from "react-dom/client";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import WishlistPage from "./pages/WishlistPage";
-
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      // {
-      //   index: true,
-      //   element: <div>Home</div>,
-      // },
+      {
+        index: true,
+        element: <HomePage />,
+      },
       {
         path: "/login",
         element: <LoginPage />,
@@ -37,10 +37,9 @@ const router = createBrowserRouter([
         element: <AccountPage />,
       },
       {
-        path: "movies",
+        path: "/movies",
         element: <MoviesListPage />,
       },
-
       {
         path: "/movie/:id",
         element: <MovieDetailsPage />,
@@ -48,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/wishlist",
         element: <WishlistPage />,
+      },
+      {
+        path: "/search",
+        element: <SearchResultsPage />,
       },
     ],
   },
