@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast"; 
+import { AUTH_DB_KEY } from "@/lib/constants";
+
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -16,8 +18,7 @@ export default function RegisterPage() {
 
 
 const onSubmit = (values) => {
-  // Use "movie_app_db" to match the Login page
-  const existingUsers = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
+  const existingUsers = JSON.parse(localStorage.getItem(AUTH_DB_KEY) || "[]");
 
   if (existingUsers.find(u => u.email === values.email)) {
     form.setError("email", { message: "Email already registered" });
@@ -25,7 +26,7 @@ const onSubmit = (values) => {
   }
 
   const updatedUsers = [...existingUsers, values];
-  localStorage.setItem("movie_app_db", JSON.stringify(updatedUsers));
+  localStorage.setItem(AUTH_DB_KEY, JSON.stringify(updatedUsers));
   
   toast.success("Account created! Please login.");
   navigate("/login");

@@ -21,6 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { AUTH_DB_KEY } from "@/lib/constants";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -32,16 +33,14 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data) => {
-    // 1. Fetch from the unified key
-    const users = JSON.parse(localStorage.getItem("movie_app_db") || "[]");
+    // Use the constant key
+    const users = JSON.parse(localStorage.getItem(AUTH_DB_KEY) || "[]");
 
-    // 2. Find the specific user object
     const foundUser = users.find(
       (u) => u.email === data.email && u.password === data.password,
     );
 
     if (foundUser) {
-      // 3. Pass the object (foundUser) to the store
       login(foundUser);
       navigate("/account");
     } else {

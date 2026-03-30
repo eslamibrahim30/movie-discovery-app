@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchNowPlaying } from "../services/movieService";
 import MovieCard from "../components/movies/MovieCard";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function MoviesListPage() {
