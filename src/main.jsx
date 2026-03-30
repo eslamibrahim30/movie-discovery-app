@@ -12,6 +12,7 @@ import MoviesListPage from "./pages/MoviesListPage";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
+import WishlistPage from "./pages/WishlistPage";
 
 
 const router = createBrowserRouter([
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/movie/:id", 
+        path: "/movie/:id",
         element: <MovieDetailsPage />,
+      },
+      {
+        path: "/wishlist",
+        element: <WishlistPage />,
       },
     ],
   },
