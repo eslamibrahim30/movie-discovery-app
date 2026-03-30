@@ -9,12 +9,15 @@ import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
 import MoviesListPage from "./pages/MoviesListPage";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import MovieDetailsPage from "./pages/MovieDetailsPage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />, 
+    element: <MainLayout />,
     children: [
       // {
       //   index: true,
@@ -26,21 +29,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <RegisterPage />, 
+        element: <RegisterPage />,
       },
       {
         path: "/account",
-        element: <AccountPage />, 
+        element: <AccountPage />,
       },
-			{
-				path: "/movies",
-				element: <MoviesListPage />
-			}
+      {
+        path: "movies",
+        element: <MoviesListPage />,
+      },
+
+      {
+        path: "/movie/:id", 
+        element: <MovieDetailsPage />,
+      },
     ],
   },
   {
-    path: "/*",
-    element: <NotFound />, 
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
