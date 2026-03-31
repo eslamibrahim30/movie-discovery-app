@@ -11,23 +11,26 @@ const SearchBar = ({ placeholder = "Search movies...", className = "" }) => {
   const [inputValue, setInputValue] = useState(initialQuery);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
-
+  
+  const lastPushedQueryRef = useRef(initialQuery);
+	
   const debouncedQuery = useDebounce(inputValue, 500);
 
-  // When the debounced value changes, navigate to search results
   useEffect(() => {
-    if (debouncedQuery.trim()) {
-      navigate(`/search?query=${encodeURIComponent(debouncedQuery.trim())}`);
+    const trimmed = debouncedQuery.trim();
+    if (trimmed && trimmed !== lastPushedQueryRef.current) {
+      lastPushedQueryRef.current = trimmed;
+      navigate(`/search?query=${encodeURIComponent(trimmed)}`);
     }
   }, [debouncedQuery, navigate]);
 
   // Sync input when navigating back
   useEffect(() => {
     const q = searchParams.get("query") || "";
-    if (q !== inputValue) {
+    if (q !== inputValue && q !== lastPushedQueryRef.current) {
+      lastPushedQueryRef.current = q;
       setInputValue(q);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const handleClear = () => {
@@ -41,7 +44,9 @@ const SearchBar = ({ placeholder = "Search movies...", className = "" }) => {
       inputRef.current?.blur();
     }
     if (e.key === "Enter" && inputValue.trim()) {
-      navigate(`/search?query=${encodeURIComponent(inputValue.trim())}`);
+      const trimmed = inputValue.trim();
+      lastPushedQueryRef.current = trimmed;
+      navigate(`/search?query=${encodeURIComponent(trimmed)}`);
     }
   };
 

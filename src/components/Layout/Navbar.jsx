@@ -159,7 +159,7 @@ const NavItem = ({ to, icon, label, badgeCount }) => (
 			<div className="relative">
 				{icon}
 				{badgeCount > 0 && (
-					<span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white shadow-sm border-2 border-background animate-in zoom-in">
+					<span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm border-2 border-background animate-in zoom-in">
 						{badgeCount}
 					</span>
 				)}
