@@ -1,6 +1,5 @@
 import * as React from "react"
-import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
-
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"; // ده الصح
 import { cn } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Tick02Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"

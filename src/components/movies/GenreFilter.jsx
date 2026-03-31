@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
 import { fetchGenres } from "@/services/movieService";
 import { Tag } from "lucide-react";
+import { useLangStore } from "@/store/useLangStore"; 
 
 const GenreFilter = ({ selectedGenres = [], onGenreToggle }) => {
   const [genres, setGenres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { lang } = useLangStore(); 
+
+  
+  const t = {
+    en: { label: "Filter by genre", clear: "Clear all" },
+    ar: { label: "تصفية حسب النوع", clear: "مسح الكل" },
+    fr: { label: "Filtrer par genre", clear: "Tout effacer" },
+    zh: { label: "按类型筛选", clear: "全部清除" },
+  }[lang];
 
   useEffect(() => {
     async function loadGenres() {
       try {
-        const data = await fetchGenres();
+        setIsLoading(true); 
+        const data = await fetchGenres(lang); 
         setGenres(data);
       } catch (err) {
         console.error("Failed to load genres:", err);
@@ -18,7 +29,7 @@ const GenreFilter = ({ selectedGenres = [], onGenreToggle }) => {
       }
     }
     loadGenres();
-  }, []);
+  }, [lang]); 
 
   if (isLoading) {
     return (
@@ -36,14 +47,14 @@ const GenreFilter = ({ selectedGenres = [], onGenreToggle }) => {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
-        <Tag size={14} />
-        <span>Filter by genre</span>
+        <Tag size={14} className="rtl:scale-x-[-1]" /> 
+        <span>{t.label}</span>
         {selectedGenres.length > 0 && (
           <button
-            onClick={() => onGenreToggle(null)} // null signals "clear all"
-            className="ml-auto text-xs text-primary hover:underline"
+            onClick={() => onGenreToggle(null)}
+            className="ml-auto rtl:mr-auto rtl:ml-0 text-xs text-primary hover:underline"
           >
-            Clear all
+            {t.clear}
           </button>
         )}
       </div>
