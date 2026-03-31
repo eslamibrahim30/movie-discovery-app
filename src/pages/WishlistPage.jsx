@@ -1,15 +1,18 @@
 import { Heart, Trash2, Star, CalendarDays, Globe, Clapperboard } from "lucide-react";
 import { useWishlistStore } from "@/store/useWishlistStore";
-import { useNavigate } from "react-router-dom";
-import { useLangStore } from "@/store/useLangStore"; 
+import { useNavigate } from "react-router";
+import { useLangStore } from "@/store/useLangStore";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { notify } from "@/services/notification";
+import { useTitle } from "@/hooks/use-title";
 
 export default function WishlistPage() {
+    useTitle("Wishlist");
     const { wishlist, removeFromWishlist } = useWishlistStore();
     const navigate = useNavigate();
-    const { lang } = useLangStore(); 
+    const { lang } = useLangStore();
+
     const t = {
         en: {
             emptyTitle: "Your wishlist is empty",
@@ -21,7 +24,7 @@ export default function WishlistPage() {
             removeMsg: "removed from wishlist",
             viewDetails: "View Details",
             savedBadge: "Saved",
-            removeTitle: "Remove from wishlist"
+            removeTitle: "Remove from wishlist",
         },
         ar: {
             emptyTitle: "قائمة المفضلة فارغة",
@@ -33,7 +36,7 @@ export default function WishlistPage() {
             removeMsg: "تمت إزالته من المفضلة",
             viewDetails: "عرض التفاصيل",
             savedBadge: "محفوظ",
-            removeTitle: "إزالة من المفضلة"
+            removeTitle: "إزالة من المفضلة",
         },
         fr: {
             emptyTitle: "Votre liste est vide",
@@ -45,7 +48,7 @@ export default function WishlistPage() {
             removeMsg: "supprimé de la liste",
             viewDetails: "Voir les détails",
             savedBadge: "Enregistré",
-            removeTitle: "Retirer de la liste"
+            removeTitle: "Retirer de la liste",
         },
         zh: {
             emptyTitle: "您的收藏夹是空的",
@@ -57,8 +60,8 @@ export default function WishlistPage() {
             removeMsg: "已从收藏夹中移除",
             viewDetails: "查看详情",
             savedBadge: "已保存",
-            removeTitle: "从收藏夹中移除"
-        }
+            removeTitle: "从收藏夹中移除",
+        },
     }[lang];
 
     const handleRemove = (e, movie) => {
@@ -83,13 +86,15 @@ export default function WishlistPage() {
                         &nbsp;{t.emptyDescSuffix}
                     </p>
                 </div>
-                <button
+                <Button
+                    aria-label="Browse movies"
+                    title="Browse movies"
                     onClick={() => navigate("/movies")}
                     className="flex items-center bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 rounded-full shadow-md shadow-primary/20 gap-2 transition-all active:scale-95 font-bold"
                 >
                     <Clapperboard size={18} />
                     {t.browseBtn}
-                </button>
+                </Button>
             </div>
         );
     }
@@ -109,7 +114,6 @@ export default function WishlistPage() {
                         {t.pageDesc}
                     </p>
                 </div>
-                <div className="h-1.5 w-24 bg-linear-to-r from-primary to-transparent rounded-full hidden md:block" />
             </div>
 
             {/* Grid */}
@@ -120,7 +124,7 @@ export default function WishlistPage() {
                         movie={movie}
                         onRemove={handleRemove}
                         onNavigate={() => navigate(`/movie/${movie.id}`)}
-                        t={t} 
+                        t={t}
                         lang={lang}
                     />
                 ))}
@@ -135,7 +139,7 @@ function WishlistCard({ movie, onRemove, onNavigate, t, lang }) {
             onClick={onNavigate}
             className="group relative overflow-hidden border-none bg-transparent transition-all duration-500 hover:-translate-y-2.5 cursor-pointer"
         >
-            {/* Poster Section */}
+            {/* Poster */}
             <div className="relative aspect-2/3 overflow-hidden rounded-4xl bg-muted shadow-xl ring-1 ring-black/5 transition-all duration-500 group-hover:shadow-primary/20 group-hover:ring-primary/30">
                 <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -147,6 +151,7 @@ function WishlistCard({ movie, onRemove, onNavigate, t, lang }) {
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-5 transition-all duration-300">
                     <Button
+                        aria-label={`Watch ${movie.title}`}
                         size="sm"
                         onClick={(e) => { e.stopPropagation(); onNavigate(); }}
                         className="w-full gap-2 font-black rounded-xl shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
@@ -157,6 +162,7 @@ function WishlistCard({ movie, onRemove, onNavigate, t, lang }) {
 
                 {/* Remove button */}
                 <button
+                    aria-label={`Remove ${movie.title}`}
                     onClick={(e) => onRemove(e, movie)}
                     className={`absolute top-4 ${lang === 'ar' ? 'left-4' : 'right-4'} p-3 rounded-2xl backdrop-blur-md bg-destructive/90 text-white shadow-lg transition-all duration-300 z-20 active:scale-75 hover:bg-destructive hover:scale-110`}
                     title={t.removeTitle}
@@ -181,7 +187,7 @@ function WishlistCard({ movie, onRemove, onNavigate, t, lang }) {
                 </div>
             </div>
 
-            {/* Info Section */}
+            {/* Info */}
             <div className="pt-5 px-1 space-y-2">
                 <h3 className="font-black text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors duration-300">
                     {movie.title}

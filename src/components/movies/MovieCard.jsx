@@ -3,12 +3,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useWishlistStore } from "@/store/useWishlistStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { notify } from "@/services/notification";
+import { useLangStore } from "@/store/useLangStore";
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useWishlistStore();
+  const { lang } = useLangStore();
+
+  const t = {
+    en: { watchNow: "Watch Now", added: "Added to wishlist ❤️", removed: "Removed from wishlist ❌" },
+    ar: { watchNow: "شاهد الآن", added: "أُضيف إلى المفضلة ❤️", removed: "أُزيل من المفضلة ❌" },
+    fr: { watchNow: "Regarder", added: "Ajouté aux favoris ❤️", removed: "Supprimé des favoris ❌" },
+    zh: { watchNow: "立即观看", added: "已添加到收藏夹 ❤️", removed: "已从收藏夹中移除 ❌" },
+  }[lang];
 
   if (!movie || !movie.id) return null;
 
@@ -19,9 +28,9 @@ const MovieCard = ({ movie }) => {
     toggleWishlist(movie);
 
     if (inWishlist) {
-      notify.error(`${movie.title} Removed from wishlist ❌`);
+      notify.error(`${movie.title} ${t.removed}`);
     } else {
-      notify.success(`${movie.title} Added to wishlist ❤️`);
+      notify.success(`${movie.title} ${t.added}`);
     }
   };
 
@@ -32,7 +41,6 @@ const MovieCard = ({ movie }) => {
     >
       {/* Poster */}
       <div className="relative aspect-2/3 overflow-hidden rounded-2xl bg-muted shadow-lg ring-1 ring-white/10 transition-all duration-500 group-hover:ring-primary/40">
-        
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
@@ -43,6 +51,8 @@ const MovieCard = ({ movie }) => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/30 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-4 transition-all duration-300">
           <Button
+            aria-label={`Watch ${movie.title}`}
+            title={`Watch ${movie.title}`}
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
@@ -51,12 +61,13 @@ const MovieCard = ({ movie }) => {
             className="w-full gap-2 font-bold shadow-lg"
           >
             <Play size={16} />
-            Watch Now
+            {t.watchNow}
           </Button>
         </div>
 
-        {/* Wishlist */}
         <button
+          aria-label="Add to wishlist"
+          title="Add to wishlist"
           onClick={handleWishlistClick}
           className={`absolute top-3 right-3 p-2.5 rounded-full backdrop-blur-md transition-all duration-300 z-20 active:scale-90 ${
             inWishlist
@@ -67,7 +78,6 @@ const MovieCard = ({ movie }) => {
           <Heart size={18} fill={inWishlist ? "currentColor" : "none"} />
         </button>
 
-        {/* Rating */}
         <div className="absolute top-3 left-3 pointer-events-none">
           <Badge className="bg-yellow-500/90 text-black font-bold flex items-center gap-1 px-2 py-1 rounded-md">
             <Star size={12} className="fill-current" />
@@ -76,7 +86,6 @@ const MovieCard = ({ movie }) => {
         </div>
       </div>
 
-      {/* Info */}
       <CardContent className="pt-4 px-2 space-y-2">
         <h3 className="font-bold text-base md:text-lg leading-snug line-clamp-2 group-hover:text-primary transition-colors">
           {movie.title}

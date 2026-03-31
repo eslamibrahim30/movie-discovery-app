@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import {
   fetchMovieDetails,
   fetchMovieRecommendations,
   fetchMovieVideos,
 } from "../services/movieService";
 import MovieCard from "../components/movies/MovieCard";
-import { useLangStore } from "@/store/useLangStore"; 
+import { useLangStore } from "@/store/useLangStore";
 import { Loader2, Star, Clock, Calendar } from "lucide-react";
+import { useTitle } from "@/hooks/use-title";
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
-  const { lang } = useLangStore(); 
+  const { lang } = useLangStore();
 
   const [movie, setMovie] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [trailer, setTrailer] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  useTitle(movie?.title || "Movie Details");
 
   const t = {
     en: {
@@ -46,7 +49,7 @@ export default function MovieDetailsPage() {
       recommendations: "推荐电影",
       noRecs: "暂无推荐",
       loading: "正在加载电影详情...",
-    }
+    },
   }[lang];
 
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function MovieDetailsPage() {
 
     loadData();
     window.scrollTo(0, 0);
-  }, [id, lang]); 
+  }, [id, lang]);
 
   if (isLoading || !movie) {
     return (
@@ -86,7 +89,6 @@ export default function MovieDetailsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-12">
-      
       {/* 🎬 HERO SECTION */}
       <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         {/* Backdrop Overlay */}
@@ -101,7 +103,6 @@ export default function MovieDetailsPage() {
 
         <div className="absolute z-20 bottom-0 left-0 right-0 p-6 md:p-12">
           <div className="container mx-auto flex flex-col md:flex-row gap-8 items-center md:items-end">
-            
             {/* Poster */}
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -139,7 +140,6 @@ export default function MovieDetailsPage() {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 mt-12 space-y-16">
-        
         {/* 🎥 TRAILER */}
         {trailer && (
           <div className="space-y-6">

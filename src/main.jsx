@@ -1,19 +1,22 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import React from "react";
+
 import "./index.css";
 import "./App.css";
+
 import MainLayout from "./components/Layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
 import MoviesListPage from "./pages/MoviesListPage";
-import HomePage from "./pages/HomePage";
-import SearchResultsPage from "./pages/SearchResultsPage";
-import React from "react";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import WishlistPage from "./pages/WishlistPage";
+import HomePage from "./pages/HomePage";
+import SearchResultsPage from "./pages/SearchResultsPage";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -25,32 +28,37 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <LoginPage />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <RegisterPage />,
       },
       {
-        path: "/account",
-        element: <AccountPage />,
-      },
-      {
-        path: "/movies",
+        path: "movies",
         element: <MoviesListPage />,
       },
       {
-        path: "/movie/:id",
+        path: "movie/:id",
         element: <MovieDetailsPage />,
       },
       {
-        path: "/wishlist",
-        element: <WishlistPage />,
+        path: "search",
+        element: <SearchResultsPage />,
       },
       {
-        path: "/search",
-        element: <SearchResultsPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "account",
+            element: <AccountPage />,
+          },
+          {
+            path: "wishlist",
+            element: <WishlistPage />,
+          },
+        ],
       },
     ],
   },
@@ -63,5 +71,5 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </StrictMode>
 );

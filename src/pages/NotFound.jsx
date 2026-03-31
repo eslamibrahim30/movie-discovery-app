@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import { useLangStore } from "@/store/useLangStore";
 import { Home, Tv2 } from "lucide-react";
+import { useTitle } from "@/hooks/use-title";
 
 export default function NotFound() {
+  useTitle("Page Not Found");
   const navigate = useNavigate();
   const { lang } = useLangStore();
 
@@ -27,12 +29,12 @@ export default function NotFound() {
       title: "在空间中迷失了？",
       desc: "您寻找的电影或页面已退出框架。",
       btn: "返回首页",
-    }
+    },
   }[lang];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[75vh] px-4 text-center" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      {/* 🎬 Big 404 Visual */}
+      {/* Big 404 Visual */}
       <div className="relative mb-8">
         <h1 className="text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter text-muted/20 select-none">
           404
@@ -44,7 +46,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      {/* 📝 Text Content */}
+      {/* Text Content */}
       <div className="max-w-md space-y-4 relative z-10">
         <h2 className="text-3xl md:text-4xl font-black tracking-tight text-foreground">
           {t.title}
@@ -54,9 +56,11 @@ export default function NotFound() {
         </p>
       </div>
 
-      {/* 🏠 Action Button */}
-      <Button 
-        onClick={() => navigate("/")} 
+      {/* Action Button */}
+      <Button
+        aria-label="Return to Home"
+        title="Return to Home"
+        onClick={() => navigate("/")}
         size="lg"
         className="mt-10 h-14 px-10 rounded-2xl font-black text-base shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all gap-2"
       >
@@ -64,7 +68,7 @@ export default function NotFound() {
         {t.btn}
       </Button>
 
-      {/* 🌌 Background Decoration */}
+      {/* Background Decoration */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-primary/5 blur-[120px] -z-10 rounded-full" />
     </div>
   );

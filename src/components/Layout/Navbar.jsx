@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import {
     Home,
     Clapperboard,
@@ -68,7 +68,6 @@ const Navbar = () => {
                         {theme === "dark" ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-blue-500" />}
                     </Button>
 
-                    
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm" className="gap-2 font-bold cursor-pointer uppercase border border-transparent hover:border-border rounded-xl">
@@ -103,7 +102,7 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            {/* Mobile Overlay & Sidebar تفضل كما هي */}
+            {/* Mobile Overlay */}
             <div
                 className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-all duration-500 ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
                 onClick={() => setIsOpen(false)}
@@ -145,7 +144,6 @@ const Navbar = () => {
     );
 };
 
-// ... المكونات الفرعية NavItem و MobileNavItem كما هي
 const NavItem = ({ to, icon, label, badgeCount }) => (
     <li>
         <NavLink
