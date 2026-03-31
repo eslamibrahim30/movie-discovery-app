@@ -1,11 +1,7 @@
-import './App.css';
+import MoviesListPage from "./pages/MoviesListPage";
 
 function App() {
-  return (
-    <div>
-      <h1>Movie Discovery App</h1>
-    </div>
-  );
+  return <MoviesListPage />;
 }
 
 export default App;
