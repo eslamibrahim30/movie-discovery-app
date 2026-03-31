@@ -1,34 +1,55 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useWishlistStore = create((set, get) => ({
-  wishlist: [],
+export const useWishlistStore = create(
+	persist(
+		(set, get) => ({
+			usersWishlists: {},
 
-  addToWishlist: (movie) => {
-    const exists = get().wishlist.some((m) => m.id === movie.id);
-    if (exists) return;
+			addToWishlist: (movie, userEmail) => {
+				const currentList = get().usersWishlists[userEmail] || [];
+				const exists = currentList.some((m) => m.id === movie.id);
+				if (exists) return;
 
-    set((state) => ({
-      wishlist: [...state.wishlist, movie],
-    }));
-  },
+				set((state) => ({
+					usersWishlists: {
+						...state.usersWishlists,
+						[userEmail]: [...currentList, movie],
+					},
+				}));
+			},
 
-  removeFromWishlist: (id) => {
-    set((state) => ({
-      wishlist: state.wishlist.filter((m) => m.id !== id),
-    }));
-  },
+			removeFromWishlist: (id, userEmail) => {
+				const currentList = get().usersWishlists[userEmail] || [];
+				set((state) => ({
+					usersWishlists: {
+						...state.usersWishlists,
+						[userEmail]: currentList.filter((m) => m.id !== id),
+					},
+				}));
+			},
 
-  toggleWishlist: (movie) => {
-    const exists = get().wishlist.some((m) => m.id === movie.id);
+			toggleWishlist: (movie, userEmail) => {
+				const currentList = get().usersWishlists[userEmail] || [];
+				const exists = currentList.some((m) => m.id === movie.id);
 
-    if (exists) {
-      get().removeFromWishlist(movie.id);
-    } else {
-      get().addToWishlist(movie);
-    }
-  },
+				if (exists) {
+					get().removeFromWishlist(movie.id, userEmail);
+					return false;
+				} else {
+					get().addToWishlist(movie, userEmail);
+					return true;
+				}
+			},
 
-  isInWishlist: (id) => {
-    return get().wishlist.some((m) => m.id === id);
-  },
-}));
+			isInWishlist: (id, userEmail) => {
+				if (!userEmail) return false;
+				const currentList = get().usersWishlists[userEmail] || [];
+				return currentList.some((m) => m.id === id);
+			},
+		}),
+		{
+			name: "wishlist-storage",
+		}
+	)
+);
