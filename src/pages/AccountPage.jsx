@@ -130,7 +130,7 @@ export default function AccountPage() {
 				<CardFooter className="pt-6">
 					<Button
 						variant="destructive"
-						className="w-full rounded-xl transition-all hover:scale-[1.02]"
+						className="w-full text-gray rounded-xl transition-all hover:scale-[1.02]"
 						onClick={handleLogout}
 					>
 						<LogOut size={18} className="me-2" /> {t.signOut}
